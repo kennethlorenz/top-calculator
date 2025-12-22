@@ -1,7 +1,7 @@
 const MAINSCREEN = document.querySelector(".main");
 const NUMBERS = document.querySelectorAll(".number");
 const DECIMAL = document.querySelector(".decimal");
-let firstNumber = "0";
+let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 function add(firstNumber, secondNumber) {
@@ -41,6 +41,9 @@ function updateMainScreen(number) {
 function addDecimal() {
   if (MAINSCREEN.textContent.includes(".")) {
     return;
+  } else if (firstNumber == "0" || firstNumber == "") {
+    firstNumber = "0.";
+    updateMainScreen(firstNumber);
   } else {
     firstNumber += ".";
     updateMainScreen(firstNumber);
@@ -50,7 +53,7 @@ function addDecimal() {
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
     firstNumber += e.target.textContent;
-    MAINSCREEN.textContent = firstNumber;
+    updateMainScreen(firstNumber);
   });
 });
 
