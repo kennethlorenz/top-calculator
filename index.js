@@ -1,6 +1,7 @@
 const MAINSCREEN = document.querySelector(".main");
 const SECONDARYSCREEN = document.querySelector(".secondary");
 const NUMBERS = document.querySelectorAll(".number");
+const ZERO = document.querySelector(".zero");
 const DECIMAL = document.querySelector(".decimal");
 const CLEARBUTTON = document.querySelector("#c");
 const ALLCLEARBUTTON = document.querySelector("#ac");
@@ -59,8 +60,8 @@ function removeLastNumber() {
   updateMainScreen(mainScreenNumber);
 
   if (mainScreenNumber == "") {
-    mainScreenNumber = 0;
-    updateMainScreen(mainScreenNumber);
+    mainScreenNumber = "";
+    updateMainScreen(0);
     return;
   }
 }
@@ -74,6 +75,15 @@ function clear() {
   mainScreenNumber = "";
 }
 
+function addZero() {
+  if (MAINSCREEN.textContent == 0) {
+    return;
+  } else {
+    mainScreenNumber += 0;
+    updateMainScreen(mainScreenNumber);
+  }
+}
+
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
     mainScreenNumber += e.target.textContent;
@@ -81,7 +91,7 @@ NUMBERS.forEach((number) => {
   });
 });
 
+ZERO.addEventListener("click", addZero);
 DECIMAL.addEventListener("click", addDecimal);
 CLEARBUTTON.addEventListener("click", removeLastNumber);
-
 ALLCLEARBUTTON.addEventListener("click", clear);
