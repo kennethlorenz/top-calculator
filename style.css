@@ -46,6 +46,14 @@ button {
   gap: 1rem;
 }
 
+.secondary {
+  height: 2rem;
+}
+
+.main {
+  height: 3.7rem;
+}
+
 .result {
   font-size: 1.8rem;
 }
