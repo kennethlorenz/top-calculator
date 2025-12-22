@@ -57,6 +57,12 @@ function addDecimal() {
 function removeLastNumber() {
   mainScreenNumber = mainScreenNumber.slice(0, -1);
   updateMainScreen(mainScreenNumber);
+
+  if (mainScreenNumber == "") {
+    mainScreenNumber = 0;
+    updateMainScreen(mainScreenNumber);
+    return;
+  }
 }
 
 function clear() {
