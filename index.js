@@ -38,9 +38,20 @@ function updateMainScreen(number) {
   MAINSCREEN.textContent = number;
 }
 
+function addDecimal() {
+  if (MAINSCREEN.textContent.includes(".")) {
+    return;
+  } else {
+    firstNumber += ".";
+    updateMainScreen(firstNumber);
+  }
+}
+
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
     firstNumber += e.target.textContent;
     MAINSCREEN.textContent = firstNumber;
   });
 });
+
+DECIMAL.addEventListener("click", addDecimal);
