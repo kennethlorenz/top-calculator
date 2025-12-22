@@ -1,3 +1,9 @@
+const MAINSCREEN = document.querySelector(".main");
+const NUMBERS = document.querySelectorAll(".number");
+const DECIMAL = document.querySelector(".decimal");
+let firstNumber = "0";
+let secondNumber = "";
+let operator = "";
 function add(firstNumber, secondNumber) {
   return firstNumber + secondNumber;
 }
@@ -27,3 +33,14 @@ function operate(firstNumber, secondNumber, operator) {
       break;
   }
 }
+
+function updateMainScreen(number) {
+  MAINSCREEN.textContent = number;
+}
+
+NUMBERS.forEach((number) => {
+  number.addEventListener("click", (e) => {
+    firstNumber += e.target.textContent;
+    MAINSCREEN.textContent = firstNumber;
+  });
+});
