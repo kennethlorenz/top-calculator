@@ -1,6 +1,7 @@
 const MAINSCREEN = document.querySelector(".main");
 const NUMBERS = document.querySelectorAll(".number");
 const DECIMAL = document.querySelector(".decimal");
+let mainScreenNumber = "";
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
@@ -41,19 +42,19 @@ function updateMainScreen(number) {
 function addDecimal() {
   if (MAINSCREEN.textContent.includes(".")) {
     return;
-  } else if (firstNumber == "0" || firstNumber == "") {
-    firstNumber = "0.";
-    updateMainScreen(firstNumber);
+  } else if (mainScreenNumber == "0" || mainScreenNumber == "") {
+    mainScreenNumber = "0.";
+    updateMainScreen(mainScreenNumber);
   } else {
-    firstNumber += ".";
-    updateMainScreen(firstNumber);
+    mainScreenNumber += ".";
+    updateMainScreen(mainScreenNumber);
   }
 }
 
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
-    firstNumber += e.target.textContent;
-    updateMainScreen(firstNumber);
+    mainScreenNumber += e.target.textContent;
+    updateMainScreen(mainScreenNumber);
   });
 });
 
