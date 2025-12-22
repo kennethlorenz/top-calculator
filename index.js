@@ -1,6 +1,9 @@
 const MAINSCREEN = document.querySelector(".main");
+const SECONDARYSCREEN = document.querySelector(".secondary");
 const NUMBERS = document.querySelectorAll(".number");
 const DECIMAL = document.querySelector(".decimal");
+const CLEARBUTTON = document.querySelector("#c");
+const ALLCLEARBUTTON = document.querySelector("#ac");
 let mainScreenNumber = "";
 let firstNumber = "";
 let secondNumber = "";
@@ -51,6 +54,20 @@ function addDecimal() {
   }
 }
 
+function removeLastNumber() {
+  mainScreenNumber = mainScreenNumber.slice(0, -1);
+  updateMainScreen(mainScreenNumber);
+}
+
+function clear() {
+  SECONDARYSCREEN.textContent = "";
+  MAINSCREEN.textContent = "0";
+  firstNumber = "";
+  secondNumber = "";
+  operator = "";
+  mainScreenNumber = "";
+}
+
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
     mainScreenNumber += e.target.textContent;
@@ -59,3 +76,6 @@ NUMBERS.forEach((number) => {
 });
 
 DECIMAL.addEventListener("click", addDecimal);
+CLEARBUTTON.addEventListener("click", removeLastNumber);
+
+ALLCLEARBUTTON.addEventListener("click", clear);
