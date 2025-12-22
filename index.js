@@ -5,6 +5,8 @@ const ZERO = document.querySelector(".zero");
 const DECIMAL = document.querySelector(".decimal");
 const CLEARBUTTON = document.querySelector("#c");
 const ALLCLEARBUTTON = document.querySelector("#ac");
+const OPERATORS = document.querySelectorAll(".operator");
+const EQUAL = document.querySelector(".equal");
 let mainScreenNumber = "";
 let firstNumber = "";
 let secondNumber = "";
@@ -84,10 +86,28 @@ function addZero() {
   }
 }
 
+function updateSecondaryScreen(firstNumber, operator) {
+  if (operator == "=" && firstNumber == "") {
+    return;
+  } else if (firstNumber !== "" && operator !== "") {
+    SECONDARYSCREEN.textContent = `${firstNumber} ${operator}`;
+  } else if (firstNumber.length >= 1 && secondNumber.length >= 1) {
+    SECONDARYSCREEN.textContent = `${firstNumber} ${operator} ${secondNumber} = `;
+  }
+}
+
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
     mainScreenNumber += e.target.textContent;
     updateMainScreen(mainScreenNumber);
+  });
+});
+
+OPERATORS.forEach((op) => {
+  op.addEventListener("click", (e) => {
+    operator = e.target.textContent;
+    updateSecondaryScreen(mainScreenNumber, operator);
+    mainScreenNumber = "";
   });
 });
 
