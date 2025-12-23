@@ -9,8 +9,8 @@ const OPERATORS = document.querySelectorAll(".operator");
 const EQUAL = document.querySelector(".equal");
 let mainScreenNumber = "";
 let firstNumber = "";
-let secondNumber = "";
 let operator = "";
+let answer = "";
 function add(firstNumber, secondNumber) {
   return firstNumber + secondNumber;
 }
@@ -27,16 +27,16 @@ function divide(firstNumber, secondNumber) {
 function operate(firstNumber, secondNumber, operator) {
   switch (operator) {
     case "+":
-      add(firstNumber, secondNumber);
+      answer = add(firstNumber, secondNumber);
       break;
     case "-":
-      subtract(firstNumber, secondNumber);
+      answer = subtract(firstNumber, secondNumber);
       break;
     case "x":
-      multiply(firstNumber, secondNumber);
+      answer = multiply(firstNumber, secondNumber);
       break;
     case "÷":
-      divide(firstNumber, secondNumber);
+      answer = divide(firstNumber, secondNumber);
       break;
   }
 }
@@ -46,11 +46,11 @@ function updateMainScreen(number) {
 }
 
 function addDecimal() {
-  if (MAINSCREEN.textContent.includes(".")) {
-    return;
-  } else if (mainScreenNumber == "0" || mainScreenNumber == "") {
+  if (mainScreenNumber == "0" || mainScreenNumber == "") {
     mainScreenNumber = "0.";
     updateMainScreen(mainScreenNumber);
+  } else if (MAINSCREEN.textContent.includes(".")) {
+    return;
   } else {
     mainScreenNumber += ".";
     updateMainScreen(mainScreenNumber);
@@ -72,9 +72,9 @@ function clear() {
   SECONDARYSCREEN.textContent = "";
   MAINSCREEN.textContent = "0";
   firstNumber = "";
-  secondNumber = "";
   operator = "";
   mainScreenNumber = "";
+  answer = "";
 }
 
 function addZero() {
@@ -83,16 +83,6 @@ function addZero() {
   } else {
     mainScreenNumber += 0;
     updateMainScreen(mainScreenNumber);
-  }
-}
-
-function updateSecondaryScreen(firstNumber, operator) {
-  if (operator == "=" && firstNumber == "") {
-    return;
-  } else if (firstNumber !== "" && operator !== "") {
-    SECONDARYSCREEN.textContent = `${firstNumber} ${operator}`;
-  } else if (firstNumber.length >= 1 && secondNumber.length >= 1) {
-    SECONDARYSCREEN.textContent = `${firstNumber} ${operator} ${secondNumber} = `;
   }
 }
 
@@ -105,8 +95,10 @@ NUMBERS.forEach((number) => {
 
 OPERATORS.forEach((op) => {
   op.addEventListener("click", (e) => {
+    //get clicked operator
     operator = e.target.textContent;
-    updateSecondaryScreen(mainScreenNumber, operator);
+    firstNumber = MAINSCREEN.textContent;
+    SECONDARYSCREEN.textContent = `${firstNumber} ${operator}`;
     mainScreenNumber = "";
   });
 });
@@ -115,3 +107,21 @@ ZERO.addEventListener("click", addZero);
 DECIMAL.addEventListener("click", addDecimal);
 CLEARBUTTON.addEventListener("click", removeLastNumber);
 ALLCLEARBUTTON.addEventListener("click", clear);
+EQUAL.addEventListener("click", () => {
+  if (mainScreenNumber == "") {
+    return;
+  } else {
+    operate(parseFloat(firstNumber), parseFloat(mainScreenNumber), operator);
+    //display answer in main screen
+    MAINSCREEN.textContent = answer;
+    //update secondary screen
+    SECONDARYSCREEN.textContent = `${firstNumber} ${operator} ${mainScreenNumber} = `;
+
+    //transfer the answer to first number
+    firstNumber = answer;
+
+    //reset mainScreenNumber
+    mainScreenNumber = "";
+    console.log(answer);
+  }
+});
