@@ -206,6 +206,8 @@ document.addEventListener("keydown", (e) => {
     addNumberToMainScreen(e.key);
   } else if (e.key == "0") {
     addZero();
+  } else if (e.key == ".") {
+    addDecimal();
   } else if (e.key == "+" || e.key == "-" || e.key == "*" || e.key == "/") {
     let op = e.key == "/" ? "÷" : e.key;
     performOperation(op);
