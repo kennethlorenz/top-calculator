@@ -106,7 +106,7 @@ NUMBERS.forEach((number) => {
   });
 });
 
-function performOperation(firstNumber, secondNumber, operator) {
+function evaluate(firstNumber, secondNumber, operator) {
   if (secondNumber == 0 && operator == "÷") {
     window.alert("You can't divide by 0, Please use a different number.");
     clear();
@@ -128,51 +128,73 @@ function performOperation(firstNumber, secondNumber, operator) {
   }
 }
 
-OPERATORS.forEach((op) => {
-  op.addEventListener("click", (e) => {
-    //this if statement runs if an operator is clicked and both first number value
-    // and second number value (in this case mainScreenNumber) is present
-    //It allows the user to evaluate the first 2 values of the numbers right away after pressing
-    //another operator
-    if (firstNumber !== "" && mainScreenNumber !== "") {
-      performOperation(firstNumber, mainScreenNumber, operator);
-
-      //get new operator
-      operator = e.target.textContent;
-
-      //transfer the answer to first number
-      firstNumber = answer;
-
-      //update secondary screen
-      SECONDARYSCREEN.textContent = `${answer} ${operator}`;
-    }
-    //this else statement fires in the initial calculation
-    else {
-      //get current operator
-      operator = e.target.textContent;
-
-      //set firstnumber
-      firstNumber = MAINSCREEN.textContent;
-
-      //update secondary screen
-      SECONDARYSCREEN.textContent = `${firstNumber} ${operator}`;
-
-      //reset mainScreen number
-      mainScreenNumber = "";
-    }
-  });
-});
-
-EQUAL.addEventListener("click", () => {
+//runs when equal sign is called
+function evaluateOnEqual() {
   if (mainScreenNumber == "") {
     return;
   } else {
-    performOperation(firstNumber, mainScreenNumber, operator);
+    evaluate(firstNumber, mainScreenNumber, operator);
 
     //reset values so that the user can start a new operation from
     //scratch when pressing equal sign
     firstNumber = "";
     answer = "";
+  }
+}
+
+function performOperation(op) {
+  //this if statement runs if an operator is clicked and both first number value
+  // and second number value (in this case mainScreenNumber) is present
+  //It allows the user to evaluate the first 2 values of the numbers right away after pressing
+  //another operator
+  if (firstNumber !== "" && mainScreenNumber !== "") {
+    evaluate(firstNumber, mainScreenNumber, operator);
+
+    //get new operator
+    operator = op;
+
+    //transfer the answer to first number
+    firstNumber = answer;
+
+    //update secondary screen
+    SECONDARYSCREEN.textContent = `${answer} ${operator}`;
+  }
+  //this else statement fires in the initial calculation
+  else {
+    //get current operator
+    operator = op;
+
+    //set firstnumber
+    firstNumber = MAINSCREEN.textContent;
+
+    //update secondary screen
+    SECONDARYSCREEN.textContent = `${firstNumber} ${operator}`;
+
+    //reset mainScreen number
+    mainScreenNumber = "";
+  }
+}
+
+OPERATORS.forEach((op) => {
+  op.addEventListener("click", (e) => {
+    let op = e.target.textContent;
+    performOperation(op);
+  });
+});
+
+EQUAL.addEventListener("click", evaluateOnEqual);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Backspace" || e.key === "Delete") {
+    removeLastNumber();
+  } else if (e.key >= "0" && e.key <= "9") {
+    mainScreenNumber += e.key;
+    updateMainScreen(mainScreenNumber);
+  } else if (e.key == "+" || e.key == "-" || e.key == "*" || e.key == "/") {
+    let op = e.key == "/" ? "÷" : e.key;
+    performOperation(op);
+  } else if (e.key == "Enter") {
+    evaluateOnEqual();
   }
 });
 
