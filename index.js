@@ -97,10 +97,6 @@ function performOperation(firstNumber, secondNumber, operator) {
   operate(parseFloat(firstNumber), parseFloat(secondNumber), operator);
   //display answer in main screen
   MAINSCREEN.textContent = answer;
-  //update secondary screen
-
-  //transfer the answer to first number
-  firstNumber = answer;
 
   //reset mainScreenNumber
   mainScreenNumber = "";
@@ -117,6 +113,9 @@ OPERATORS.forEach((op) => {
 
       //get new operator
       operator = e.target.textContent;
+
+      //transfer the answer to first number
+      firstNumber = answer;
 
       //update secondary screen
       SECONDARYSCREEN.textContent = `${answer} ${operator}`;
