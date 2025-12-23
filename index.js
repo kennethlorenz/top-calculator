@@ -7,10 +7,12 @@ const CLEARBUTTON = document.querySelector("#c");
 const ALLCLEARBUTTON = document.querySelector("#ac");
 const OPERATORS = document.querySelectorAll(".operator");
 const EQUAL = document.querySelector(".equal");
+
 let mainScreenNumber = "";
 let firstNumber = "";
 let operator = "";
 let answer = "";
+
 function add(firstNumber, secondNumber) {
   return firstNumber + secondNumber;
 }
@@ -106,10 +108,16 @@ NUMBERS.forEach((number) => {
   });
 });
 
+function displayErrorOnZeroDivisionAndReset() {
+  MAINSCREEN.textContent = "You cannot divide by zero";
+  firstNumber = "";
+  answer = "";
+  mainScreenNumber = "";
+}
+
 function evaluate(firstNumber, secondNumber, operator) {
   if (secondNumber == 0 && operator == "÷") {
-    window.alert("You can't divide by 0, Please use a different number.");
-    clear();
+    displayErrorOnZeroDivisionAndReset();
   } else {
     operate(parseFloat(firstNumber), parseFloat(secondNumber), operator);
 
@@ -147,7 +155,9 @@ function performOperation(op) {
   // and second number value (in this case mainScreenNumber) is present
   //It allows the user to evaluate the first 2 values of the numbers right away after pressing
   //another operator
-  if (firstNumber !== "" && mainScreenNumber !== "") {
+  if (mainScreenNumber == "0" && operator == "÷") {
+    displayErrorOnZeroDivisionAndReset();
+  } else if (firstNumber !== "" && mainScreenNumber !== "") {
     evaluate(firstNumber, mainScreenNumber, operator);
 
     //get new operator
