@@ -203,7 +203,7 @@ document.addEventListener("keydown", (e) => {
   } else if (e.key == "+" || e.key == "-" || e.key == "*" || e.key == "/") {
     let op = e.key == "/" ? "÷" : e.key;
     performOperation(op);
-  } else if (e.key == "Enter") {
+  } else if (e.key == "Enter" || e.key == "=") {
     evaluateOnEqual();
   }
 });
