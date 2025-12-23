@@ -88,6 +88,11 @@ function addZero() {
 
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
+    //resets the secondary screen if the user hits equal sign
+    //to start a new operation
+    if (firstNumber == "" && answer == "") {
+      SECONDARYSCREEN.textContent = "";
+    }
     mainScreenNumber += e.target.textContent;
     updateMainScreen(mainScreenNumber);
   });
@@ -98,7 +103,11 @@ function performOperation(firstNumber, secondNumber, operator) {
   //display answer in main screen
   MAINSCREEN.textContent = answer;
 
-  //reset mainScreenNumber
+  //update secondary screen
+  SECONDARYSCREEN.textContent = `${firstNumber} ${operator} ${mainScreenNumber} = `;
+
+  //reset mainScreenNumber so that we can store the next value the user enters
+  //when they click on the operator / equal sign
   mainScreenNumber = "";
 }
 
@@ -142,6 +151,11 @@ EQUAL.addEventListener("click", () => {
     return;
   } else {
     performOperation(firstNumber, mainScreenNumber, operator);
+
+    //reset values so that the user can start a new operation from
+    //scratch when pressing equal sign
+    firstNumber = "";
+    answer = "";
   }
 });
 
