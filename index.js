@@ -93,35 +93,60 @@ NUMBERS.forEach((number) => {
   });
 });
 
+function performOperation(firstNumber, secondNumber, operator) {
+  operate(parseFloat(firstNumber), parseFloat(secondNumber), operator);
+  //display answer in main screen
+  MAINSCREEN.textContent = answer;
+  //update secondary screen
+
+  //transfer the answer to first number
+  firstNumber = answer;
+
+  //reset mainScreenNumber
+  mainScreenNumber = "";
+}
+
 OPERATORS.forEach((op) => {
   op.addEventListener("click", (e) => {
-    //get clicked operator
-    operator = e.target.textContent;
-    firstNumber = MAINSCREEN.textContent;
-    SECONDARYSCREEN.textContent = `${firstNumber} ${operator}`;
-    mainScreenNumber = "";
+    //this if statement runs if an operator is clicked and both first number value
+    // and second number value (in this case mainScreenNumber) is present
+    //It allows the user to evaluate the first 2 values of the numbers right away after pressing
+    //another operator
+    if (firstNumber !== "" && mainScreenNumber !== "") {
+      performOperation(firstNumber, mainScreenNumber, operator);
+
+      //get new operator
+      operator = e.target.textContent;
+
+      //update secondary screen
+      SECONDARYSCREEN.textContent = `${answer} ${operator}`;
+    }
+    //this else statement fires in the initial calculation
+    else {
+      //get current operator
+      operator = e.target.textContent;
+
+      //set firstnumber
+      firstNumber = MAINSCREEN.textContent;
+
+      //update secondary screen
+      SECONDARYSCREEN.textContent = `${firstNumber} ${operator}`;
+
+      //reset mainScreen number
+      mainScreenNumber = "";
+    }
   });
+});
+
+EQUAL.addEventListener("click", () => {
+  if (mainScreenNumber == "") {
+    return;
+  } else {
+    performOperation(firstNumber, mainScreenNumber, operator);
+  }
 });
 
 ZERO.addEventListener("click", addZero);
 DECIMAL.addEventListener("click", addDecimal);
 CLEARBUTTON.addEventListener("click", removeLastNumber);
 ALLCLEARBUTTON.addEventListener("click", clear);
-EQUAL.addEventListener("click", () => {
-  if (mainScreenNumber == "") {
-    return;
-  } else {
-    operate(parseFloat(firstNumber), parseFloat(mainScreenNumber), operator);
-    //display answer in main screen
-    MAINSCREEN.textContent = answer;
-    //update secondary screen
-    SECONDARYSCREEN.textContent = `${firstNumber} ${operator} ${mainScreenNumber} = `;
-
-    //transfer the answer to first number
-    firstNumber = answer;
-
-    //reset mainScreenNumber
-    mainScreenNumber = "";
-    console.log(answer);
-  }
-});
