@@ -99,16 +99,21 @@ NUMBERS.forEach((number) => {
 });
 
 function performOperation(firstNumber, secondNumber, operator) {
-  operate(parseFloat(firstNumber), parseFloat(secondNumber), operator);
-  //display answer in main screen
-  MAINSCREEN.textContent = answer;
+  if (secondNumber == 0 && operator == "÷") {
+    window.alert("You can't divide by 0, Please use a different number.");
+    clear();
+  } else {
+    operate(parseFloat(firstNumber), parseFloat(secondNumber), operator);
+    //display answer in main screen
+    MAINSCREEN.textContent = answer;
 
-  //update secondary screen
-  SECONDARYSCREEN.textContent = `${firstNumber} ${operator} ${mainScreenNumber} = `;
+    //update secondary screen
+    SECONDARYSCREEN.textContent = `${firstNumber} ${operator} ${mainScreenNumber} = `;
 
-  //reset mainScreenNumber so that we can store the next value the user enters
-  //when they click on the operator / equal sign
-  mainScreenNumber = "";
+    //reset mainScreenNumber so that we can store the next value the user enters
+    //when they click on the operator / equal sign
+    mainScreenNumber = "";
+  }
 }
 
 OPERATORS.forEach((op) => {
