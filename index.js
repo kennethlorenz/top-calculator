@@ -86,6 +86,14 @@ function addZero() {
   }
 }
 
+function roundTo3rdDecimal(number) {
+  return number.toFixed(3);
+}
+
+function hasDecimal(number) {
+  return number % 1 !== 0;
+}
+
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
     //resets the secondary screen if the user hits equal sign
@@ -104,6 +112,10 @@ function performOperation(firstNumber, secondNumber, operator) {
     clear();
   } else {
     operate(parseFloat(firstNumber), parseFloat(secondNumber), operator);
+
+    if (hasDecimal(answer)) {
+      answer = roundTo3rdDecimal(answer);
+    }
     //display answer in main screen
     MAINSCREEN.textContent = answer;
 
