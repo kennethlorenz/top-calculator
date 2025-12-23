@@ -37,7 +37,6 @@ button {
 
 .screen {
   background-color: white;
-  height: 10rem;
   width: 35rem;
   text-align: right;
   padding: 1.5rem;
@@ -51,7 +50,9 @@ button {
 }
 
 .main {
-  height: 3.7rem;
+  min-height: 3.7rem;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .result {
