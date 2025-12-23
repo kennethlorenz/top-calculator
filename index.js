@@ -80,8 +80,14 @@ function clear() {
 }
 
 function addZero() {
-  if (MAINSCREEN.textContent == 0) {
+  if (MAINSCREEN.textContent.includes(".")) {
+    mainScreenNumber += 0;
+    updateMainScreen(mainScreenNumber);
+  } else if (MAINSCREEN.textContent == 0) {
     return;
+  } else if (MAINSCREEN.textContent == "You cannot divide by zero") {
+    SECONDARYSCREEN.textContent = "";
+    MAINSCREEN.textContent = "0";
   } else {
     mainScreenNumber += 0;
     updateMainScreen(mainScreenNumber);
