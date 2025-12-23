@@ -96,15 +96,20 @@ function hasDecimal(number) {
   return number % 1 !== 0;
 }
 
+function addNumberToMainScreen(number) {
+  if (firstNumber == "" && answer == "") {
+    SECONDARYSCREEN.textContent = "";
+  }
+  mainScreenNumber += number;
+  updateMainScreen(mainScreenNumber);
+}
+
 NUMBERS.forEach((number) => {
   number.addEventListener("click", (e) => {
     //resets the secondary screen if the user hits equal sign
     //to start a new operation
-    if (firstNumber == "" && answer == "") {
-      SECONDARYSCREEN.textContent = "";
-    }
-    mainScreenNumber += e.target.textContent;
-    updateMainScreen(mainScreenNumber);
+    let number = e.target.textContent;
+    addNumberToMainScreen(number);
   });
 });
 
@@ -197,9 +202,10 @@ EQUAL.addEventListener("click", evaluateOnEqual);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Backspace" || e.key === "Delete") {
     removeLastNumber();
-  } else if (e.key >= "0" && e.key <= "9") {
-    mainScreenNumber += e.key;
-    updateMainScreen(mainScreenNumber);
+  } else if (e.key >= "1" && e.key <= "9") {
+    addNumberToMainScreen(e.key);
+  } else if (e.key == "0") {
+    addZero();
   } else if (e.key == "+" || e.key == "-" || e.key == "*" || e.key == "/") {
     let op = e.key == "/" ? "÷" : e.key;
     performOperation(op);
