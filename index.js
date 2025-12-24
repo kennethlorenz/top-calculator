@@ -196,6 +196,13 @@ function performOperation(op) {
   }
 }
 
+function convertOperator(keyboardOperator) {
+  if (keyboardOperator === "/") return "÷";
+  if (keyboardOperator === "*") return "×";
+  if (keyboardOperator === "-") return "−";
+  if (keyboardOperator === "+") return "+";
+}
+
 OPERATORS.forEach((op) => {
   op.addEventListener("click", (e) => {
     let op = e.target.textContent;
@@ -215,8 +222,7 @@ document.addEventListener("keydown", (e) => {
   } else if (e.key == ".") {
     addDecimal();
   } else if (e.key == "+" || e.key == "-" || e.key == "*" || e.key == "/") {
-    let op = e.key == "/" ? "÷" : e.key;
-    performOperation(op);
+    performOperation(convertOperator(e.key));
   } else if (e.key == "Enter" || e.key == "=") {
     evaluateOnEqual();
   }
